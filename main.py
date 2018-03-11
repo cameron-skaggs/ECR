@@ -1,6 +1,6 @@
 #GUI Basics
 from tkinter import *
-
+from ECR import Ecr
 
 class Application(Frame):
     def __init__(self, master):
@@ -24,7 +24,9 @@ class Application(Frame):
         self.owner = Entry(self)
         self.status = OptionMenu(self, variable, "Initializing", "Ownership", "Routing", "CAB Processing")
 
-        self.printButton = Button(self, text="Enter ECR", command=lambda: self.print_message(self.ecr.get()))
+        #Pushing the "Enter Button will create an ECR
+        self.printButton = Button(self, text="Enter ECR", command=lambda:
+        self.create_ecr(self.ecr.get(), self.init.get(), self.owner.get(), variable.get()))
         self.quitButton = Button(self, text="Quit", command=self.quit)
 
         # format the grid
@@ -39,10 +41,17 @@ class Application(Frame):
         self.printButton.grid(row=4, column=1)
         self.quitButton.grid(row=5, column=1)
 
-    def print_message(self, message):
-        self.display = Label(self, text=message)
+    '''This function is for my own personal 
+    benefit to ensure I'm capturing the right data
+    will not be used in the final product'''
+    def create_ecr(self, nummber, initiator, owner, status):
+        ecr = Ecr(nummber,initiator, owner, status)
+        self.display = Label(self, text=nummber)
         self.display.grid(row=6, column=1)
-        print(message)
+        print(nummber)
+        print(ecr.get_owner())
+        print(initiator)
+        print(ecr.get_status)
 
 
 root = Tk()
